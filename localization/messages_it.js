@@ -12,6 +12,8 @@ jQuery.extend(jQuery.validator.messages, {
        number: "Inserisci un numero valido.",
        digits: "Inserisci solo numeri.",
        creditcard: "Inserisci un numero di carta di credito valido.",
+       cap: "Inserire un numero di C.A.P. valido.",
+       mobile: "Inserire un numero di telefono valido.",
        equalTo: "Il valore non corrisponde.",
        accept: "Inserisci un valore con un&apos;estensione valida.",
        maxlength: jQuery.validator.format("Non inserire pi&ugrave; di {0} caratteri."),
