@@ -772,8 +772,8 @@ $.extend($.validator, {
 		numberDE: {numberDE: true},
 		digits: {digits: true},
 		creditcard: {creditcard: true},
-		cap: {creditcard: true},
-		mobile: {creditcard: true}
+		cap: {cap: true},
+		mobile: {mobile: true}
 	},
 
 	addClassRules: function(className, rules) {
