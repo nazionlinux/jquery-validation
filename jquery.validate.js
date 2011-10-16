@@ -19,7 +19,7 @@ $.extend($.fn, {
 
 		// if nothing is selected, return nothing; can't chain anyway
 		if (!this.length) {
-			options && options.debug && window.console && console.warn( "nothing selected, can't validate, returning nothing" );
+			options && options.debug && window.console && console.warn( "nessun campo selezionato" );
 			return;
 		}
 
@@ -265,23 +265,25 @@ $.extend($.validator, {
 	},
 
 	messages: {
-		required: "This field is required.",
-		remote: "Please fix this field.",
-		email: "Please enter a valid email address.",
-		url: "Please enter a valid URL.",
-		date: "Please enter a valid date.",
-		dateISO: "Please enter a valid date (ISO).",
-		number: "Please enter a valid number.",
-		digits: "Please enter only digits.",
-		creditcard: "Please enter a valid credit card number.",
-		equalTo: "Please enter the same value again.",
-		accept: "Please enter a value with a valid extension.",
-		maxlength: $.validator.format("Please enter no more than {0} characters."),
-		minlength: $.validator.format("Please enter at least {0} characters."),
-		rangelength: $.validator.format("Please enter a value between {0} and {1} characters long."),
-		range: $.validator.format("Please enter a value between {0} and {1}."),
-		max: $.validator.format("Please enter a value less than or equal to {0}."),
-		min: $.validator.format("Please enter a value greater than or equal to {0}.")
+		required: "Campo obbligatorio.",
+		remote: "Controlla questo campo.",
+		email: "Inserire un indirizzo email valido.",
+		url: "Inserire un indirizzo web valido.",
+		date: "Inserire una data valida.",
+		dateISO: "Inserire una data valida (ISO).",
+		number: "Inserire un numero valido.",
+		digits: "Inserire solo numeri.",
+		creditcard: "Inserire un numero di carta di credito valido.",
+		cap: "Inserire un numero di C.A.P. valido.",
+       		mobile: "Inserire un numero di telefono valido.",
+		equalTo: "Il valore non corrisponde.",
+       		accept: "Inserire un valore con un&apos;estensione valida.",
+       		maxlength: jQuery.validator.format("Non inserire pi&ugrave; di {0} caratteri."),
+       		minlength: jQuery.validator.format("Inserire almeno {0} caratteri."),
+       		rangelength: jQuery.validator.format("Inserire un valore compreso tra {0} e {1} caratteri."),
+       		range: jQuery.validator.format("Inserire un valore compreso tra {0} e {1}."),
+       		max: jQuery.validator.format("Inserire un valore minore o uguale a {0}."),
+       		min: jQuery.validator.format("Inserire un valore maggiore o uguale a {0}.")
 	},
 
 	autoCreateRanges: false,
@@ -769,7 +771,9 @@ $.extend($.validator, {
 		number: {number: true},
 		numberDE: {numberDE: true},
 		digits: {digits: true},
-		creditcard: {creditcard: true}
+		creditcard: {creditcard: true},
+		cap: {creditcard: true},
+		mobile: {creditcard: true}
 	},
 
 	addClassRules: function(className, rules) {
@@ -1082,6 +1086,19 @@ $.extend($.validator, {
 			}
 
 			return (nCheck % 10) == 0;
+		},
+
+		// validare un numero di cap italiano
+		cap: function(value, element) {
+			return this.optional(element) || /^[0-9]{5}$/.test(value);
+		},
+
+		// http://regexlib.com/%28A%289xYsmjELH1rq8EQhGf-R-IvcQrErNFljGoX5oUGXH9OwaeKt2TvRk5ypvNpqZUArSBKz8veG0nWXJ9VcmGl0PTSCIqf8HcSpsMnunSBnbGqdbauOEy2_8sV9LdbwEbxg-FV_roM1k7s5TK6i8nctoNsehPWO2GvO7eVfzmvzyOehO3ThdmbjM-8VTy-EoFhm0%29%29/REDetails.aspx?regexp_id=587
+		// validare un numero di cellulare italiano con o senza codice internazionale "+39"
+		// valido: +393471234567 | 3381234567
+		// non valido: +39 3401234567 | 347 1234567 | 338-1234567
+		mobile: function(value, element) {
+			return this.optional(element) || /^([+]39)?((38[[8-9]0])|(34[[7-9]0])|(36[680])|(33[[3-9]0])|(32[8-9]))([\d]{7})$/.test(value);
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/accept
